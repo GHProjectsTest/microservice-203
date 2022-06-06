@@ -118,7 +118,8 @@ public class ResTest {
         
     try {
       c.setLogin(AnonymousAgentImpl.IDENTIFIER, "");
-      ClientResponse result = c.sendRequest("GET", mainPath + "/test", "");
+      ClientResponse result = c.sendRequest("GET", mainPath + "/test", """
+""");
     
       System.out.println("Result of 'test$HTTP_Method_Name$': " + result.getResponse().trim());
     } catch (Exception e) {
@@ -138,7 +139,20 @@ public class ResTest {
     MiniClient c = new MiniClient();
     c.setConnectorEndpoint(connector.getHttpEndpoint());
     
+        
+    try {
+      c.setLogin(AnonymousAgentImpl.IDENTIFIER, "");
+      ClientResponse result = c.sendRequest("GET", mainPath + "/fail", """
+""");
     
+      Assert.assertEquals("[757328]", result.getHttpCode(), 200);
+
+      System.out.println("Result of 'test$HTTP_Method_Name$': " + result.getResponse().trim());
+    } catch (Exception e) {
+      e.printStackTrace();
+      fail("Exception: " + e);
+    }
+
     
   }
 
